@@ -107,7 +107,7 @@ jobs:
       - name: Run demo with GraalVM Native Image
         run: ./org.lwjgl.demo.util.lz4.hellolz4
       - name: Package the full release distribution
-        run: ant -emacs release
+        run: echo y | ant -emacs release
         env:
           LWJGL_BUILD_OFFLINE: true
       - name: Upload Artifacts
@@ -184,7 +184,7 @@ jobs:
       - name: Build native
         run: ant -emacs compile-native -Dgcc.libpath.opengl=/usr/lib/${{matrix.TRIPLET}}/mesa
       - name: Package the full release distribution
-        run: ant -emacs release
+        run: echo y | ant -emacs release
         env:
           LWJGL_BUILD_OFFLINE: true
       - name: Upload Artifacts
@@ -303,7 +303,7 @@ jobs:
       - name: Run demo with GraalVM Native Image
         run: ./org.lwjgl.demo.util.lz4.hellolz4
       - name: Package the full release distribution
-        run: ant -emacs release
+        run: echo y | ant -emacs release
         env:
           LWJGL_BUILD_OFFLINE: true
       - name: Upload Artifacts
@@ -412,7 +412,7 @@ jobs:
         run: org.lwjgl.demo.util.lz4.hellolz4.exe
         if: matrix.ARCH == 'x64'
       - name: Package the full release distribution
-        run: ant -emacs release
+        run: echo y | ant -emacs release
         env:
           LWJGL_BUILD_OFFLINE: true
       - name: Upload Artifacts
