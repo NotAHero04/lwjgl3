@@ -106,13 +106,11 @@ jobs:
         run: JAVA_HOME=jdk-graalvm ant demo -Dclass=org.lwjgl.demo.util.lz4.HelloLZ4
       - name: Run demo with GraalVM Native Image
         run: ./org.lwjgl.demo.util.lz4.hellolz4
-      - name: Package distribution
-        run: ant -emacs dist
       - name: Upload Linux ${{ matrix.ARCH }} artifact
         uses: actions/upload-artifact@v4
         with:
           name: lwjgl-bundle-linux-${{ matrix.ARCH }}
-          path: dist/
+          path: bin/jars
           retention-days: 7
 
   linux-cross:
@@ -181,13 +179,11 @@ jobs:
         run: ant -emacs compile
       - name: Build native
         run: ant -emacs compile-native -Dgcc.libpath.opengl=/usr/lib/${{matrix.TRIPLET}}/mesa
-      - name: Package distribution
-        run: ant -emacs dist
       - name: Upload Linux ${{ matrix.ARCH }} artifact
         uses: actions/upload-artifact@v4
         with:
           name: lwjgl-bundle-linux-${{ matrix.ARCH }}
-          path: dist/
+          path: bin/jars/
           retention-days: 7
 
   freebsd-cross:
@@ -298,13 +294,11 @@ jobs:
         run: JAVA_HOME=jdk-graalvm/Contents/Home ant demo -Dclass=org.lwjgl.demo.util.lz4.HelloLZ4
       - name: Run demo with GraalVM Native Image
         run: ./org.lwjgl.demo.util.lz4.hellolz4
-      - name: Package distribution
-        run: ant -emacs dist
       - name: Upload macOS ${{ matrix.ARCH }} artifact
         uses: actions/upload-artifact@v4
         with:
           name: lwjgl-bundle-macos-${{ matrix.ARCH }}
-          path: dist/
+          path: bin/jars/
           retention-days: 7
 
   windows:
@@ -405,11 +399,9 @@ jobs:
       - name: Run demo with GraalVM Native Image
         run: org.lwjgl.demo.util.lz4.hellolz4.exe
         if: matrix.ARCH == 'x64'
-      - name: Package distribution
-        run: ant -emacs dist
       - name: Upload Windows ${{ matrix.ARCH }} artifact
         uses: actions/upload-artifact@v4
         with:
           name: lwjgl-bundle-windows-${{ matrix.ARCH }}
-          path: dist/
+          path: bin/jars/
           retention-days: 7
