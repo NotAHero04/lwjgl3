@@ -106,11 +106,15 @@ jobs:
         run: JAVA_HOME=jdk-graalvm ant demo -Dclass=org.lwjgl.demo.util.lz4.HelloLZ4
       - name: Run demo with GraalVM Native Image
         run: ./org.lwjgl.demo.util.lz4.hellolz4
-      - name: Upload Linux ${{ matrix.ARCH }} artifact
+      - name: Package the full release distribution
+        run: ant -emacs release
+        env:
+          LWJGL_BUILD_OFFLINE: true
+      - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: lwjgl-bundle-linux-${{ matrix.ARCH }}
-          path: bin/jars
+          name: lwjgl-release-${{ runner.os }}-${{ matrix.ARCH }}
+          path: release/
           retention-days: 7
 
   linux-cross:
@@ -179,11 +183,15 @@ jobs:
         run: ant -emacs compile
       - name: Build native
         run: ant -emacs compile-native -Dgcc.libpath.opengl=/usr/lib/${{matrix.TRIPLET}}/mesa
-      - name: Upload Linux ${{ matrix.ARCH }} artifact
+      - name: Package the full release distribution
+        run: ant -emacs release
+        env:
+          LWJGL_BUILD_OFFLINE: true
+      - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: lwjgl-bundle-linux-${{ matrix.ARCH }}
-          path: bin/jars/
+          name: lwjgl-release-${{ runner.os }}-${{ matrix.ARCH }}
+          path: release/
           retention-days: 7
 
   freebsd-cross:
@@ -294,11 +302,15 @@ jobs:
         run: JAVA_HOME=jdk-graalvm/Contents/Home ant demo -Dclass=org.lwjgl.demo.util.lz4.HelloLZ4
       - name: Run demo with GraalVM Native Image
         run: ./org.lwjgl.demo.util.lz4.hellolz4
-      - name: Upload macOS ${{ matrix.ARCH }} artifact
+      - name: Package the full release distribution
+        run: ant -emacs release
+        env:
+          LWJGL_BUILD_OFFLINE: true
+      - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: lwjgl-bundle-macos-${{ matrix.ARCH }}
-          path: bin/jars/
+          name: lwjgl-release-${{ runner.os }}-${{ matrix.ARCH }}
+          path: release/
           retention-days: 7
 
   windows:
@@ -399,9 +411,13 @@ jobs:
       - name: Run demo with GraalVM Native Image
         run: org.lwjgl.demo.util.lz4.hellolz4.exe
         if: matrix.ARCH == 'x64'
-      - name: Upload Windows ${{ matrix.ARCH }} artifact
+      - name: Package the full release distribution
+        run: ant -emacs release
+        env:
+          LWJGL_BUILD_OFFLINE: true
+      - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: lwjgl-bundle-windows-${{ matrix.ARCH }}
-          path: bin/jars/
+          name: lwjgl-release-${{ runner.os }}-${{ matrix.ARCH }}
+          path: release/
           retention-days: 7
