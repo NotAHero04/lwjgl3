@@ -107,14 +107,14 @@ jobs:
       - name: Run demo with GraalVM Native Image
         run: ./org.lwjgl.demo.util.lz4.hellolz4
       - name: Package the full release distribution
-        run: echo y | ant -emacs release
+        run: ant -emacs release -Djdk17=true
         env:
           LWJGL_BUILD_OFFLINE: true
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: lwjgl-release-${{ runner.os }}-${{ matrix.ARCH }}
-          path: release/
+          path: bin/RELEASE/
           retention-days: 7
 
   linux-cross:
@@ -184,14 +184,14 @@ jobs:
       - name: Build native
         run: ant -emacs compile-native -Dgcc.libpath.opengl=/usr/lib/${{matrix.TRIPLET}}/mesa
       - name: Package the full release distribution
-        run: echo y | ant -emacs release
+        run: ant -emacs release -Djdk17=true
         env:
           LWJGL_BUILD_OFFLINE: true
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: lwjgl-release-${{ runner.os }}-${{ matrix.ARCH }}
-          path: release/
+          path: bin/RELEASE/
           retention-days: 7
 
   freebsd-cross:
@@ -303,14 +303,14 @@ jobs:
       - name: Run demo with GraalVM Native Image
         run: ./org.lwjgl.demo.util.lz4.hellolz4
       - name: Package the full release distribution
-        run: echo y | ant -emacs release
+        run: ant -emacs release -Djdk17=true
         env:
           LWJGL_BUILD_OFFLINE: true
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: lwjgl-release-${{ runner.os }}-${{ matrix.ARCH }}
-          path: release/
+          path: bin/RELEASE/
           retention-days: 7
 
   windows:
@@ -412,12 +412,12 @@ jobs:
         run: org.lwjgl.demo.util.lz4.hellolz4.exe
         if: matrix.ARCH == 'x64'
       - name: Package the full release distribution
-        run: echo y | ant -emacs release
+        run: ant -emacs release -Djdk17=true
         env:
           LWJGL_BUILD_OFFLINE: true
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: lwjgl-release-${{ runner.os }}-${{ matrix.ARCH }}
-          path: release/
+          path: bin/RELEASE/
           retention-days: 7
